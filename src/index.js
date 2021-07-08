@@ -1,2 +1,11 @@
 import './style.css';
-// key 22346616 - da93255f31f30d17d2f747f5d
+import fetchImage from './js/fetchImg';
+import imageCard from './templates/imageCard.hbs';
+import '@pnotify/core/dist/BrightTheme.css';
+import '@pnotify/core/dist/PNotify.css';
+import { defaults, error } from '@pnotify/core';
+
+const refs = {
+    form: document.querySelector('#search-form'),
+
+}
