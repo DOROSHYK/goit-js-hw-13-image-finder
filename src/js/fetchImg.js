@@ -7,15 +7,15 @@ export default class ApiService {
         this.page = 1;
     }
 
-    async fetchImage() {
+     fetchImage() {
         console.log(this);
-        const url =  await `${Base_URL}?image_type=photo&orientation=horizontal&q=${this.searchQuery}&page=${this.page}&per_page=12&key=${Api_KEY}`;
-        if (!url.ok) {
-            throw new Error(`Sorry, but no such ${url.status} was found` )
-        }
-        const img = await url.json();
-        incrementPage();
-        return await img.hits;
+        const url =  `${Base_URL}?image_type=photo&orientation=horizontal&q=${this.searchQuery}&page=${this.page}&per_page=12&key=${Api_KEY}`;
+         return fetch(url)
+             .then(response => response.json())
+             .then(({ hits }) => {
+                 this.incrementPage();
+                 return hits;
+         })
     }
 
      incrementPage () {
