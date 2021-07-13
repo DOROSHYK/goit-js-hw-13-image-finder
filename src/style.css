@@ -118,6 +118,11 @@ img {
   border-radius: 5px;
 }
 
+.btn-load {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .stats {
   display: flex;
   justify-content: space-evenly;

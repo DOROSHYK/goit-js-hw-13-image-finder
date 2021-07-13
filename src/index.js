@@ -6,6 +6,9 @@ import { trackScroll, backToTop } from './js/to-top'
 import '@pnotify/core/dist/BrightTheme.css';
 import '@pnotify/core/dist/PNotify.css';
 import { defaults, error } from '@pnotify/core';
+import { async } from 'fast-glob';
+// import LoadMoreBtn from './js/loadMoreBtn';
+
 defaults.mouseReset = false;
 defaults.delay = 3000;
 
@@ -19,11 +22,21 @@ const refs = {
 };
 
 const ApiService = new fetchImage();
+// const LoadMoreImage = new LoadMoreBtn();
 
 refs.searchForm.addEventListener('submit', searchImg);
 refs.gallery.addEventListener('click', openBigImg);
 refs.toTopBtn.addEventListener('click', backToTop);
 window.addEventListener('scroll', trackScroll);
+refs.loadMore.addEventListener('click', loadMoreImg)
+
+function loadMoreImg() {
+    
+    const img = ApiService.fetchImage();
+    addImg();
+    scrollAfterLoad();
+
+}
 
 function searchImg(event) {
     event.preventDefault();
@@ -43,6 +56,8 @@ function searchImg(event) {
 event.currentTarget.elements.query.value = '';
 }
 
+
+
 function addImg() {
     
     ApiService.fetchImage()
@@ -60,8 +75,8 @@ function addImg() {
         .catch(error => console.log(error));
 }
 
-function addContainer(a) {
-    refs.gallery.insertAdjacentHTML('beforeend', imageCard(a));
+function addContainer(img) {
+    refs.gallery.insertAdjacentHTML('beforeend', imageCard(img));
 }
 
 
@@ -69,3 +84,39 @@ function clearContainer() {
     refs.gallery.innerHTML = '';
 }
 
+function scrollAfterLoad() {
+    try {
+        setTimeout(() => {
+            window.scrollAfterLoad({
+                top: document.body.scrollHeight,
+                left: 0,
+                behavior: 'smooth',
+            });
+        }, 1000)
+    } catch (error) {
+    console.log(error);
+}
+}
+
+// const options = {
+//     rootMargin: '10px',
+//     threshold: 0.5,
+// };
+
+// const observer = new IntersectionObserver(onEnt, options);
+
+// let lastEll = null;
+// function observeEll() {
+//     lastEll = refs.gallery.querySelector('.galery_item');
+//     observer.observe(lastEll);
+// }
+
+// function onEnt (entries) {
+//     entries.forEach(entry => {
+//         if (entry.isIntersecting) {
+//             searchImg();
+//             observer.unobserve(lastEll);
+//         }
+        
+//     });
+// }
