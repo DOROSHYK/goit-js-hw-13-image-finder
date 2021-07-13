@@ -22,7 +22,7 @@ const refs = {
 };
 
 const ApiService = new fetchImage();
-// const LoadMoreImage = new LoadMoreBtn();
+
 
 refs.searchForm.addEventListener('submit', searchImg);
 refs.gallery.addEventListener('click', openBigImg);
@@ -87,7 +87,7 @@ function clearContainer() {
 function scrollAfterLoad() {
     try {
         setTimeout(() => {
-            window.scrollAfterLoad({
+            window.scrollTo({
                 top: document.body.scrollHeight,
                 left: 0,
                 behavior: 'smooth',
@@ -97,26 +97,3 @@ function scrollAfterLoad() {
     console.log(error);
 }
 }
-
-// const options = {
-//     rootMargin: '10px',
-//     threshold: 0.5,
-// };
-
-// const observer = new IntersectionObserver(onEnt, options);
-
-// let lastEll = null;
-// function observeEll() {
-//     lastEll = refs.gallery.querySelector('.galery_item');
-//     observer.observe(lastEll);
-// }
-
-// function onEnt (entries) {
-//     entries.forEach(entry => {
-//         if (entry.isIntersecting) {
-//             searchImg();
-//             observer.unobserve(lastEll);
-//         }
-        
-//     });
-// }
