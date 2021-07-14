@@ -31,26 +31,30 @@ window.addEventListener('scroll', trackScroll);
 refs.loadMore.addEventListener('click', loadMoreImg)
 
 function loadMoreImg() {
-    
-    const img = ApiService.fetchImage();
+
     addImg();
+   
     scrollAfterLoad();
 
 }
 
 function searchImg(event) {
     event.preventDefault();
+    refs.loadMore.classList.remove('is-hidden');
+
     ApiService.query = event.currentTarget.elements.query.value;
 
-    if (ApiService.query.trim === '') {
+    if (ApiService.query === '') {
         error({
-            title: 'No found',
+            title: 'You did not enter anything',
             text: 'Please,try again.',
         });
+        
         return
     }
 
     ApiService.resetPage();
+    refs.loadMore.classList.add('is-hidden');
     clearContainer();
     addImg();
 event.currentTarget.elements.query.value = '';
@@ -62,13 +66,14 @@ function addImg() {
     
     ApiService.fetchImage()
         .then(hits => {
-        if (hits.length === 0) {
+            if (hits.length === 0) {
+         
             error({
-                TITLE: 'Not found',
-                TEXT: 'Please,try again.',
+                title: 'There is no picture with this name',
+                text: 'Please,try again.',
             });
             return;
-        }
+         }
         addContainer(hits);
 
     })
@@ -97,3 +102,24 @@ function scrollAfterLoad() {
     console.log(error);
 }
 }
+
+
+
+//  function trackScrollLoadMore() {
+//     const scrolled = window.pageYOffset;
+//     const coords = document.documentElement.clientHeight;
+
+//     if (scrolled) {
+//        refs.loadMore.classList.add('is-hidden');
+//     }
+//     if (scrolled < coords) {
+//        refs.loadMore.classList.remove('is-hidden');
+//     }
+//   }
+
+
+
+  
+
+//   window.addEventListener('scroll', trackScrollLoadMore);
+//   refs.loadMore.addEventListener('click', backToTop);
